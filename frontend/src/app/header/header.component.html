@@ -1,0 +1,70 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand m-1" href="#">
+      <img src="../../assets/images/raspberry.jpg" width="30" height="30" alt="Raspberry">
+    </a>
+    <a class="navbar-brand ml-3" href="#">
+      <div>GROUP-9</div>  
+    </a>
+    <button
+      class="navbar-toggler m-2"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <!-- Sensors Dropdown -->
+        <li class="nav-item dropdown m-1">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="sensorsDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Sensors
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="sensorsDropdown">
+            <li>
+              <button class="dropdown-item" (click)="navigateTo('createSensor')">Create Sensor</button>
+            </li>
+            <li>
+              <button class="dropdown-item" (click)="navigateTo('sensorTable')">View Sensor Table</button>
+            </li>
+          </ul>
+        </li>
+        <!-- Measurements Dropdown -->
+        <li class="nav-item dropdown m-1">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="measurementsDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Measurements
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="measurementsDropdown">
+            <li>
+              <button class="dropdown-item" (click)="navigateTo('measurementTable')">View Measurement Table</button>
+            </li>
+            <li>
+              <button class="dropdown-item" (click)="navigateTo('measurementChart')">View Measurement Chart</button>
+            </li>
+            <li>
+              <button class="dropdown-item" (click)="navigateTo('measurementManualEntry')">Measurement Manual Entry</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

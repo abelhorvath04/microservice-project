@@ -1,0 +1,103 @@
+.background {
+  /* Modern világos szürke alap */
+  background-color: #f3f4f6;
+
+  /* Dinamikus színátmenet csíkokkal */
+  background-image: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.8) 25%, transparent 25%), 
+    linear-gradient(225deg, rgba(255, 255, 255, 0.8) 25%, transparent 25%), 
+    linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%), 
+    linear-gradient(315deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%);
+  
+  /* Színátmenetek illesztése */
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px, 20px 20px, 0px 0px;
+
+  /* Tartalom pozicionálása */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.page-content {
+  width: 100%;
+  max-width: 1200px;
+  /* Keeps the content within a reasonable width */
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Soft white background with slight transparency */
+  border-radius: 10px;
+  /* Rounded corners */
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+}
+
+RadCartesianChart {
+  margin-top: 20;
+  margin-bottom: 20;
+}
+
+.chart {
+  background-color: #e8ebf0; 
+  border-radius: 8px; 
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+RadCartesianChart {
+  margin-top: 20;
+  margin-bottom: 20;
+  height: 70%;
+  /* Magasság beállítása */
+}
+
+LineSeries {
+  height: 100%;
+}
+
+.background {
+  background-color: #f3f4f6;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.page-content {
+  width: 100%;
+  max-width: 1200px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+RadCartesianChart {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  height: 60%;
+}
+
+StackLayout {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-top: auto;
+}
+
+StackLayout Label {
+  margin-right: 15px;
+  font-size: 16px;
+  text-align: center;
+}
+
+Label {
+  font-weight: bold;
+  font-size: 16px;
+}

@@ -1,0 +1,339 @@
+openapi: 3.0.3
+info:
+  title: Microservice service of Group 9
+  description: Service to manage sensors and their measurements
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080'
+    description: Local server for testing
+tags:
+  - name: Sensor
+    description: Operations to create and manage sensors.
+  - name: Measurement
+    description: Operations to create and retrieve measurements.
+
+paths:
+  /sensors:
+    post:
+      tags:
+        - Sensor
+      summary: Generates a new sensor
+      operationId: createSensor
+      description: Generates a new sensor with name, location, type and state
+      requestBody:
+        description: Details of the sensor to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorCreateRequest'
+      responses:
+        '201':
+          description: Sensor successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorResponse'
+        '400':
+          description: Invalid sensor data
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Sensor
+      summary: Retrieves all senors
+      operationId: getAllSensors
+      description: Fetches information on all registered sensors
+      responses:
+        '200':
+          description: List of sensors successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SensorResponse'
+        '404':
+          description: No sensors found
+        '500':
+          description: Internal server error
+
+  /sensors/{sensorId}:
+    get:
+      tags:
+        - Sensor
+      summary: Retrieves a specific sensor
+      operationId: getSensorById
+      parameters:
+        - name: sensorId
+          in: path
+          required: true
+          description: Unique ID of the sensor
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sensor information successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorResponse'
+        '404':
+          description: Sensor not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Sensor
+      summary: Updates an existing sensor
+      operationId: updateSensor
+      description: Updates an existing sensor identified by its ID
+      parameters:
+        - name: sensorId
+          in: path
+          required: true
+          description: Unique ID of the sensor to update
+          schema:
+            type: integer
+      requestBody:
+        description: Updated sensor data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SensorCreateRequest'
+      responses:
+        '200':
+          description: Sensor successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SensorResponse'
+        '404':
+          description: Sensor not found
+        '400':
+          description: Invalid sensor data
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Sensor
+      summary: Deletes a sensor
+      operationId: deleteSensorById
+      description: Deletes a sensor identified by its ID
+      parameters:
+        - name: sensorId
+          in: path
+          required: true
+          description: Unique ID of the sensor to delete
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Sensor successfully deleted
+        '404':
+          description: Sensor not found
+        '500':
+          description: Internal server error
+
+  /measurements:
+    post:
+      tags:
+        - Measurement
+      summary: Records a new measurement
+      operationId: createMeasurement
+      description: Adds a new measurement for a specific sensor with values.
+      requestBody:
+        description: Measurement data to be recorded
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeasurementCreateRequest'
+      responses:
+        '201':
+          description: Measurement successfully recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasurementResponse'
+        '400':
+          description: Invalid measurement data
+        '404':
+          description: Sensor not found. The provided sensorId does not exist in the system.
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Measurement
+      summary: Retrieves all measurements
+      operationId: getAllMeasurements
+      description: Fetches all measurements recorded for sensors
+      responses:
+        '200':
+          description: List of measurements successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MeasurementResponse'
+        '404':
+          description: No measurements found
+        '500':
+          description: Internal server error
+  /measurements/{measurementId}:
+    get:
+      tags:
+        - Measurement
+      summary: Retrieves a specific measurement
+      operationId: getMeasurementById
+      parameters:
+        - name: measurementId
+          in: path
+          required: true
+          description: Unique ID of the measurement
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Measurement information successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasurementResponse'
+        '404':
+          description: Measurement not found
+        '500':
+          description: Internal server error
+
+    put:
+      tags:
+        - Measurement
+      summary: Updates an existing measurement
+      operationId: updateMeasurement
+      description: Updates an existing measurement identified by its ID
+      parameters:
+        - name: measurementId
+          in: path
+          required: true
+          description: Unique ID of the measurement to update
+          schema:
+            type: integer
+      requestBody:
+        description: Updated measurement data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeasurementCreateRequest'
+      responses:
+        '200':
+          description: Measurement successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeasurementResponse'
+        '404':
+          description: Measurement not found
+        '400':
+          description: Invalid measurement data
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Measurement
+      summary: Deletes a measurement
+      operationId: deleteMeasurementById
+      description: Deletes a measurement identified by its ID
+      parameters:
+        - name: measurementId
+          in: path
+          required: true
+          description: Unique ID of the measurement to delete
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Measurement successfully deleted
+        '404':
+          description: Measurement not found
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    SensorResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the sensor
+        name:
+          type: string
+          description: Name of the sensor
+        location:
+          type: string
+          description: Location of the sensor
+        active:
+          type: boolean
+          description: Whether the sensor is active
+        type:
+          type: string
+          description: Type of the sensor
+
+    SensorCreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the sensor
+        location:
+          type: string
+          description: Location of the sensor
+        active:
+          type: boolean
+          description: Whether the sensor is active
+        type:
+          type: string
+          description: Type of the sensor
+
+    MeasurementResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique ID of the measurement
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the measurement
+        temperature:
+          type: number
+          format: double
+          description: Temperature recorded by the sensor
+        humidity:
+          type: number
+          format: double
+          description: Humidity level recorded by the sensor
+
+    MeasurementCreateRequest:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the measurement
+        temperature:
+          type: number
+          format: double
+          description: Temperature to record
+        humidity:
+          type: number
+          format: double
+          description: Humidity level to record
+        sensorId:
+          type: integer
+          description: The unique ID of the sensor. Must exist in the system for the measurement to be created.

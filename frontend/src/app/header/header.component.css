@@ -1,0 +1,19 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    padding: 0.5rem 1rem;
+    background: #555;
+    color: #f1f1f1;
+    z-index: 1030;
+  }
+  
+  .navbar-brand img {
+    max-width: 100%;
+    width: 2rem;
+    height: auto; 
+  }
+
+  .dropdown-item {
+    font-size: 1rem;
+    padding: 0.5rem 1rem; 
+  }

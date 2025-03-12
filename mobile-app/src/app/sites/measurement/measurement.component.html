@@ -1,0 +1,24 @@
+<StackLayout class="background">
+    <ActionBar title="Measurement" class="backdrop-blur-md"></ActionBar>
+  
+    <StackLayout orientation="horizontal" horizontalAlignment="center" marginTop="10">
+      <Button text="Last 24 hours" (tap)="filterMeasurementsByPeriod('24h')" class="btn"></Button>
+      <Button text="Last 7 days" (tap)="filterMeasurementsByPeriod('7d')" class="btn"></Button>
+      <Button text="Last 30 days" (tap)="filterMeasurementsByPeriod('30d')" class="btn"></Button>
+    </StackLayout>
+  
+    <ListView [items]="filteredMeasurements" class="bg-transparent h-full">
+      <ng-template let-item="item">
+        <StackLayout class="list-item">
+          <Label [text]="'Sensor: ' + item.sensorId"></Label>
+          <Label [text]="'Date: '"></Label>
+          <Label [text]="item.timestamp | date: 'dd/MM/yyyy HH:mm:ss'" class="text-lg p-4 text-gray-500"></Label>
+          <Label [text]="'Temperature: '"></Label>
+          <Label [text]="item.temperature + '°C'" class="text-lg p-4 text-black"></Label>
+          <Label [text]="'Humidity: '"></Label>
+          <Label [text]="item.humidity + '%'" class="text-lg p-4 text-black"></Label>
+        </StackLayout>
+      </ng-template>
+    </ListView>
+  </StackLayout>
+  

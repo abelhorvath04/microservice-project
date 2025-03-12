@@ -1,0 +1,30 @@
+<Frame>
+  <Page class="background">
+    <GridLayout rows="*, auto" columns="*" class="page-content">
+      <!-- Scrollable chart container -->
+      <ScrollView orientation="horizontal" row="0">
+        <StackLayout orientation="horizontal">
+          <!-- Line Chart with both Temperature and Humidity -->
+          <RadCartesianChart width="1000">
+            <CategoricalAxis tkCartesianHorizontalAxis></CategoricalAxis>
+            <LinearAxis tkCartesianVerticalAxis title="Value" minimumValue="0" maximumValue="100"></LinearAxis>
+
+            <!-- Temperature Line Series -->
+            <LineSeries tkCartesianSeries [items]="chartData" categoryProperty="date" valueProperty="temperature"
+              [lineColor]="'#FF5733'" [showLabels]="false" />
+
+            <!-- Humidity Line Series -->
+            <LineSeries tkCartesianSeries [items]="chartData" categoryProperty="date" valueProperty="humidity"
+              [lineColor]="'#3498db'" [showLabels]="false" />
+          </RadCartesianChart>
+        </StackLayout>
+      </ScrollView>
+
+      <!-- Legend for Temperature and Humidity, aligned at the bottom -->
+      <StackLayout row="1" orientation="horizontal" horizontalAlignment="center" marginTop="20">
+        <Label text="Temperature" color="#FF5733" fontSize="16" horizontalAlignment="center"></Label>
+        <Label text="Humidity" color="#3498db" fontSize="16" horizontalAlignment="center"></Label>
+      </StackLayout>
+    </GridLayout>
+  </Page>
+</Frame>

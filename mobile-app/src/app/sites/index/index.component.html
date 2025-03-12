@@ -1,0 +1,29 @@
+<Frame>
+  <Page class="background">
+    <ActionBar title="Mobile Application" class="backdrop-blur-md"></ActionBar>
+
+    <TabView class="transition-all text-white">
+      <StackLayout *tabItem="{ title: 'Sensors' }" class="text-white decoration-none">
+        <ListView [items]="sensors" class="bg-transparent h-full">
+          <ng-template let-item="item">
+            <StackLayout [nsRouterLink]="['/sensors', item.id]">
+              <Label [text]="item.name" class="text-lg p-4 text-black bg-gray-100/50 backdrop-blur-sm"></Label>
+            </StackLayout>
+          </ng-template>
+        </ListView>
+      </StackLayout>
+
+      <StackLayout *tabItem="{ title: 'Chart' }" class="text-white decoration-none">
+        <StackLayout [nsRouterLink]="['/chart']">
+          <Label text="Charts" class="text-lg p-4 text-black bg-gray-100/50 backdrop-blur-sm"></Label>
+        </StackLayout>
+      </StackLayout>
+
+      <StackLayout *tabItem="{ title: 'Measurements' }" class="text-white decoration-none">
+      <StackLayout [nsRouterLink]="['/measurement']">
+        <Label text="Measurements" class="text-lg p-4 text-black bg-gray-100/50 backdrop-blur-sm"></Label>
+      </StackLayout>
+      </StackLayout>
+    </TabView>
+  </Page>
+</Frame>

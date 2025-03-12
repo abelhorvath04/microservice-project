@@ -1,0 +1,79 @@
+<TabView class="transition-all text-white background">
+  <!-- Measurements Tab -->
+  <FlexboxLayout flexDirection="column" class="h-full bg-transparent" *tabItem="{ title: '' }">
+
+    <FlexboxLayout flexDirection="column" alignItems="flex-start" class="h-80">
+      <FlexboxLayout justifyContent="space-between" class="w-full">
+
+        <!-- Sensor Details -->
+        <FlexboxLayout flexDirection="column" *ngIf="sensor()">
+          <FlexboxLayout class="m-4">
+            <!-- ID and Name -->
+            <Label class="text-2xl text-blue-600 bg-transparent font-semibold" [text]="sensor()?.id"></Label>
+            <Label text=" - " class="text-gray-500"></Label>
+            <Label class="text-2xl bg-transparent text-gray-800 font-bold" [text]="sensor()?.name | uppercase"></Label>
+          </FlexboxLayout>
+
+          <!-- Activity -->
+          <FlexboxLayout class="mx-4">
+            <Label class="text-gray-800 bg-transparent font-medium" text="Activity: "></Label>
+            <Label class="bg-transparent text-green-500 font-semibold"
+              [text]="sensor()?.active ? 'Active' : 'Inactive'"></Label>
+          </FlexboxLayout>
+
+          <!-- Location -->
+          <FlexboxLayout class="mx-4">
+            <Label class="text-gray-800 bg-transparent font-medium" text="Location: "></Label>
+            <Label class="bg-transparent text-gray-700" [text]="sensor()?.location || 'N/A'"></Label>
+          </FlexboxLayout>
+
+          <!-- Type -->
+          <FlexboxLayout class="mx-4">
+            <Label class="text-gray-800 bg-transparent font-medium" text="Type: "></Label>
+            <Label class="bg-transparent text-gray-700" [text]="sensor()?.type || 'N/A'"></Label>
+          </FlexboxLayout>
+        </FlexboxLayout>
+
+        <!-- Latest Stats -->
+        <FlexboxLayout *ngIf="lastMeasurement()" flexDirection="column" class="h-full p-4 card"
+          justifyContent="flex-start">
+          <Label class="bg-transparent text-gray-800 text-lg font-bold" text="Latest"></Label>
+          <Label class="bg-transparent text-gray-600"
+            [text]="lastMeasurement()?.timestamp | date : 'dd/MM/yyyy'"></Label>
+          <Label class="bg-transparent text-gray-600" [text]="lastMeasurement()?.timestamp | date : 'HH:mm:ss'"></Label>
+          <Label class="bg-transparent text-blue-600 font-medium"
+            [text]="lastMeasurement()?.temperature + '°C'"></Label>
+          <Label class="bg-transparent text-blue-600 font-medium" [text]="lastMeasurement()?.humidity + '%'"></Label>
+
+          <StackLayout orientation="horizontal" horizontalAlignment="center" marginTop="10">
+            <Button text="Latest 10" (tap)="filterLast10Measurements()" class="btn"></Button>
+          </StackLayout>
+        </FlexboxLayout>
+      </FlexboxLayout>
+    </FlexboxLayout>
+
+    <!-- List of Measurements -->
+    <ListView [items]="measurements()" class="bg-transparent h-full">
+      <ng-template let-item="item" class="h-full">
+        <FlexboxLayout justifyContent="flex-start" class="w-full bg-gray-100/50 backdrop-blur-sm">
+
+          <FlexboxLayout flexDirection="column" class="w-1/2 p-4">
+            <Label text="Temp" class="text-lg font-bold text-gray-600"></Label>
+            <Label [text]="item.temperature + ' °C'" class="text-lg p-4 text-black"></Label>
+          </FlexboxLayout>
+
+          <FlexboxLayout flexDirection="column" class="w-1/2 p-4">
+            <Label text="Hum" class="text-lg font-bold text-gray-600"></Label>
+            <Label [text]="item.humidity + '%'" class="text-lg p-4 text-black"></Label>
+          </FlexboxLayout>
+
+          <FlexboxLayout flexDirection="column" class="w-1/2 p-4">
+            <Label text="Date" class="text-lg font-bold text-gray-600"></Label>
+            <Label [text]="item.timestamp | date: 'dd/MM'" class="text-lg p-4 text-black"></Label>
+          </FlexboxLayout>
+
+        </FlexboxLayout>
+      </ng-template>
+    </ListView>
+  </FlexboxLayout>
+</TabView>

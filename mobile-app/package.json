@@ -1,0 +1,40 @@
+{
+  "name": "mobile-app",
+  "main": "./src/main.ts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "preview": "ns preview",
+    "android": "ns run android --emulator",
+    "ios": "ns run ios --emulator"
+  },
+  "dependencies": {
+    "@angular/animations": "~19.0.0",
+    "@angular/common": "~19.0.0",
+    "@angular/compiler": "~19.0.0",
+    "@angular/core": "~19.0.0",
+    "@angular/forms": "~19.0.0",
+    "@angular/platform-browser": "~19.0.0",
+    "@angular/platform-browser-dynamic": "~19.0.0",
+    "@angular/router": "~19.0.0",
+    "@nativescript/angular": "^19.0.0",
+    "@nativescript/core": "~8.8.0",
+    "@sencha/ext-web-components-classic": "^7.5.0",
+    "nativescript-ui-chart": "^15.2.3",
+    "rxjs": "~7.8.0",
+    "tns-core-modules": "^6.5.27",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~19.0.0",
+    "@angular/compiler-cli": "~19.0.0",
+    "@nativescript/android": "^8.8.6",
+    "@nativescript/preview-cli": "1.0.14",
+    "@nativescript/tailwind": "^2.1.0",
+    "@nativescript/types": "~8.8.0",
+    "@nativescript/webpack": "~5.0.0",
+    "@ngtools/webpack": "~19.0.0",
+    "tailwindcss": "~3.4.0",
+    "typescript": "~5.6.0"
+  }
+}

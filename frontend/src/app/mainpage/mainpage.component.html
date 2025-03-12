@@ -1,0 +1,296 @@
+<div class="d-flex justify-content-center">
+  <div class="welcome-card m-3">
+    <div class="welcome-header">
+      <h1>Willkommen!</h1>
+      <h2>HA2 - Frontend</h2>
+      <h3>Group-9</h3>
+    </div>
+    <div class="welcome-content">
+      <p>
+        Erstellt von: <strong>Brenner Gloria</strong> und <strong>Horváth-Szarka Ábel</strong>.
+      </p>
+      <p>
+        Entdecke die Sensoren und verfolge die Messungen mit moderner Angular-Technologie!
+      </p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="text-center m-3">
+  <p>Loading...</p>
+  <div class="spinner-border" role="status">
+  </div>
+</div>
+
+<div *ngIf="!loading">
+
+  <!-- SENSOR -->
+
+  <div class="container mt-4 mb-2">
+    <h2 id="sensors">Sensor</h2>
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3 class="text-center" id="createSensor">Create</h3>
+      </div>
+      <div class="card-body">
+        <form (submit)="createSensor(); $event.preventDefault()" #sensorForm="ngForm">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" type="text" [(ngModel)]="newSensor.name" name="name" class="form-control" required
+              #name="ngModel" [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}" />
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
+              Name is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="location">Location:</label>
+            <input id="location" type="text" [(ngModel)]="newSensor.location" name="location" class="form-control"
+              required #location="ngModel"
+              [ngClass]="{'is-invalid': location.invalid && (location.dirty || location.touched)}" />
+            <div *ngIf="location.invalid && (location.dirty || location.touched)" class="invalid-feedback">
+              Location is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="active">Active:</label>
+            <select id="active" [(ngModel)]="newSensor.active" name="active" class="form-control" required
+              #active="ngModel" [ngClass]="{'is-invalid': active.invalid && (active.dirty || active.touched)}">
+              <option [value]="true">Yes</option>
+              <option [value]="false">No</option>
+            </select>
+            <div *ngIf="active.invalid && (active.dirty || active.touched)" class="invalid-feedback">
+              Active selection is required.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="type">Type:</label>
+            <select id="type" [(ngModel)]="newSensor.type" name="type" class="form-control" required #type="ngModel"
+              [ngClass]="{'is-invalid': type.invalid && (type.dirty || type.touched)}">
+              <option value="" disabled selected>Select a type</option>
+              <option value="INDOOR">Indoor</option>
+              <option value="OUTDOOR">Outdoor</option>
+              <option value="WATER">Water</option>
+            </select>
+            <div *ngIf="type.invalid && (type.dirty || type.touched)" class="invalid-feedback">
+              Type is required.
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center justify-content-md-end mt-3">
+            <button type="submit" class="btn btn-primary mt-3" [disabled]="sensorForm.invalid">
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        <h3 class="text-center" id="sensorTable">Table</h3>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Active</th>
+                <th>Type</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sensor of sensors; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ sensor.name }}</td>
+                <td>{{ sensor.location }}</td>
+                <td>{{ sensor.active ? 'Yes' : 'No' }}</td>
+                <td>{{ sensor.type }}</td>
+                <td>
+                  <button class="btn btn-warning btn-sm m-1" (click)="editSensor(sensor)">Edit</button>
+                  <button class="btn btn-danger btn-sm m-1" (click)="deleteSensor(sensor.id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Sensor Form -->
+    <div *ngIf="editMode" class="card my-3">
+      <div class="card-header text-center">
+        <h3 id="editSensor">Edit Sensor</h3>
+      </div>
+      <div class="card-body">
+        <form (submit)="updateSensor(); $event.preventDefault()" #editSensorForm="ngForm" novalidate>
+          <div class="form-group">
+            <label for="edit-name">Name:</label>
+            <input id="edit-name" type="text" [(ngModel)]="selectedSensor.name" name="name" class="form-control"
+              required #editName="ngModel"
+              [ngClass]="{'is-invalid': editName.invalid && (editName.dirty || editName.touched)}" />
+            <div *ngIf="editName.invalid && (editName.dirty || editName.touched)" class="invalid-feedback">
+              Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-location">Location:</label>
+            <input id="edit-location" type="text" [(ngModel)]="selectedSensor.location" name="location"
+              class="form-control" required #editLocation="ngModel"
+              [ngClass]="{'is-invalid': editLocation.invalid && (editLocation.dirty || editLocation.touched)}" />
+            <div *ngIf="editLocation.invalid && (editLocation.dirty || editLocation.touched)" class="invalid-feedback">
+              Location is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-active">Active:</label>
+            <select id="edit-active" [(ngModel)]="selectedSensor.active" name="active" class="form-control" required
+              #editActive="ngModel"
+              [ngClass]="{'is-invalid': editActive.invalid && (editActive.dirty || editActive.touched)}">
+              <option [value]="true">Yes</option>
+              <option [value]="false">No</option>
+            </select>
+            <div *ngIf="editActive.invalid && (editActive.dirty || editActive.touched)" class="invalid-feedback">
+              Active selection is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-type">Type:</label>
+            <select id="edit-type" [(ngModel)]="selectedSensor.type" name="type" class="form-control" required
+              #type="ngModel" #editType="ngModel"
+              [ngClass]="{'is-invalid': editType.invalid && (editType.dirty || editType.touched)}">
+              <option value="" disabled selected>Select a type</option>
+              <option value="INDOOR">Indoor</option>
+              <option value="OUTDOOR">Outdoor</option>
+              <option value="WATER">Water</option>
+            </select>
+            <div *ngIf="editType.invalid && (editType.dirty || editType.touched)" class="invalid-feedback">
+              Type is required.
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <button type="button" (click)="cancelEdit()" class="btn btn-secondary m-1 mt-3">Cancel</button>
+            <button type="submit" class="btn btn-primary m-1 mt-3" [disabled]="editSensorForm.invalid"
+              (click)="scrollToElement('sensorTable')">Save
+              Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MEASUREMENT -->
+
+  <div class="container mt-4">
+    <h2 id="measurements">Measurement</h2>
+
+    <!-- Measurement Table -->
+    <div class="card mt-4">
+      <div class="card-header text-center">
+        <h3 id="measurementTable">Table</h3>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped" id="measurementTable">
+            <thead class="thead-dark">
+              <tr>
+                <th>ID</th>
+                <th>Timestamp</th>
+                <th>Temperature (°C)</th>
+                <th>Humidity (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let measurement of measurements; let i = index">
+                <td>{{ measurement.id }}</td>
+                <td>{{ measurement.timestamp | date: 'short' }}</td>
+                <td>{{ measurement.temperature }}</td>
+                <td>{{ measurement.humidity }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Measurement Chart -->
+    <div class="card mt-4">
+      <div class="card-header text-center">
+        <h3 id="measurementChart">Chart</h3>
+      </div>
+      <div class="card-body">
+        <div style="display: block;">
+          <canvas baseChart #chart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manual Measurement Entry -->
+    <div class="card my-4">
+      <div class="card-header text-center">
+        <h3 id="measurementManualEntry">Manual Entry</h3>
+      </div>
+      <div class="card-body">
+        <form (submit)="addMeasurement(); $event.preventDefault()" #measurementForm="ngForm" novalidate>
+
+          <!-- Sensor Selection -->
+          <select *ngIf="sensors.length > 0" id="sensorId" [(ngModel)]="newMeasurement.sensorId" name="sensorId"
+            class="form-control" required>
+            <option [ngValue]="null" disabled>Select a Sensor</option>
+            <option *ngFor="let sensor of activeSensors" [ngValue]="sensor.id">
+              {{ sensor.name }} (ID: {{ sensor.id }}, Location: {{ sensor.location }})
+            </option>
+          </select>
+          <div *ngIf="!newMeasurement.sensorId && measurementForm.submitted" class="invalid-feedback">
+            Sensor selection is required.
+          </div>
+
+          <!-- Temperature Input -->
+          <div class="form-group">
+            <label for="temperature">Temperature (°C):</label>
+            <input id="temperature" type="number" [(ngModel)]="newMeasurement.temperature" name="temperature"
+              class="form-control" required #temperature="ngModel"
+              [ngClass]="{'is-invalid': (temperature.invalid || !isValidTemperature()) && (temperature.dirty || temperature.touched)}"
+              min="-100" max="100" />
+            <div *ngIf="temperature.invalid && (temperature.dirty || temperature.touched)" class="invalid-feedback">
+              Temperature is required and must be a number.
+            </div>
+            <div *ngIf="!isValidTemperature() && (temperature.dirty || temperature.touched)" class="invalid-feedback">
+              Temperature must be between -100 and 100°C.
+            </div>
+          </div>
+
+          <!-- Humidity Input -->
+          <div class="form-group">
+            <label for="humidity">Humidity (%):</label>
+            <input id="humidity" type="number" [(ngModel)]="newMeasurement.humidity" name="humidity"
+              class="form-control" required #humidity="ngModel"
+              [ngClass]="{'is-invalid': (humidity.invalid || !isValidHumidity()) && (humidity.dirty || humidity.touched)}"
+              min="0" max="100" />
+            <div *ngIf="humidity.invalid && (humidity.dirty || humidity.touched)" class="invalid-feedback">
+              Humidity is required and must be a positive number.
+            </div>
+            <div *ngIf="!isValidHumidity() && (humidity.dirty || humidity.touched)" class="invalid-feedback">
+              Humidity must be between 0 and 100%.
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="d-flex justify-content-center justify-content-md-end mt-3">
+            <button type="submit" class="btn btn-primary"
+              [disabled]="measurementForm.invalid || !isValidTemperature() || !isValidHumidity()">
+              Create
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
