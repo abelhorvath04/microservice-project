@@ -12,7 +12,7 @@ This group-project is a microservice-based application developed to interact wit
 - **Config Server**: Provides configuration management for the services, delivering necessary parameters to registered clients.
 - **API Gateway**: Serves as a unified entry point to all backend services, integrating communication with the frontend, mobile app, and Raspberry Pi via HiveMQ.
 
-### Database
+### Database (AWS - PostgreSQL - Aiven)
 - PostgreSQL database hosted on AWS through Aiven.
 - The client application handles sensor and measurement data, which is received from the Raspberry Pi and stored in the database via DTOs (Data Transfer Objects).
 - CRUD operations are implemented via REST APIs.
