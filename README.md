@@ -34,9 +34,11 @@ This group-project is a microservice-based application developed to interact wit
 - **Spring Boot** (Backend): Client, Eureka, Config Server, API Gateway
 - **Angular** (Frontend): Data visualization and CRUD functionality
 - **NativeScript** (Mobile App): Displaying sensor data in charts
-- **Raspberry Pi**: DHT-11 sensor for temperature and humidity, Python-based message broker, HiveMQ for communication
+- **Raspberry Pi**: DHT-11 sensor for temperature and humidity, Python-based message broker, HiveMQ for communication, LCD display
 - **Database**: PostgreSQL on AWS via Aiven
 - **Message Broker**: HiveMQ for communication between Raspberry Pi and Spring Boot backend
+- **Linux**: Installed and configured Raspberry Pi OS, ensuring necessary setup and command execution for smooth operation of the application.
+
 
 ## Summary
 This project demonstrates the integration of microservices, real-time data collection, and visualization using modern technologies such as Spring Boot, Angular, NativeScript, and Raspberry Pi. The use of message brokers and cloud services allows for efficient and scalable communication between components.
